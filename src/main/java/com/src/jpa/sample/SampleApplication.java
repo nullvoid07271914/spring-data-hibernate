@@ -1,6 +1,6 @@
 package com.src.jpa.sample;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,26 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.src.jpa.sample.entities.Student;
-import com.src.jpa.sample.entities.Subject;
-import com.src.jpa.sample.repositories.InstructorRepository;
 import com.src.jpa.sample.repositories.StudentRepository;
-import com.src.jpa.sample.repositories.StudentSubjectRepository;
-import com.src.jpa.sample.repositories.SubjectRepository;
 
 @SpringBootApplication
 public class SampleApplication {
 
 	@Autowired
-	private InstructorRepository instructorRepo;
-
-	@Autowired
 	private StudentRepository studentRepo;
-
-	@Autowired
-	private SubjectRepository subjectRepo;
-
-	@Autowired
-	private StudentSubjectRepository studSubRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SampleApplication.class, args);
@@ -89,12 +76,54 @@ public class SampleApplication {
 //			studSubRepo.saveAndFlush(studSub1);
 //			studSubRepo.saveAndFlush(studSub2);
 
-			Optional<Student> stud = studentRepo.findById(3L);
-			System.out.println(stud.get().getFirstname());
+//			Optional<Student> stud = studentRepo.findById(3L);
+//			System.out.println(stud.get().getFirstname());
+//
+//			List<Subject> subjects = stud.get().getSubjects();
+//			for (Subject sub : subjects) {
+//				System.out.println(sub.getName() + " = " + sub.getDescription());
+//			}
 
-			List<Subject> subjects = stud.get().getSubjects();
-			for (Subject sub : subjects) {
-				System.out.println(sub.getName() + " = " + sub.getDescription());
+//			Address add1 = new Address();
+//			add1.setBarangay("sasa");
+//			add1.setCity("davao");
+//			add1.setStreet("sto. rosario");
+//			add1.setZipCode("8000");
+//
+//			Address add2 = new Address();
+//			add2.setBarangay("lorega");
+//			add2.setCity("cebu");
+//			add2.setStreet("sam miguel");
+//			add2.setZipCode("6000");
+//
+//			Student stud = new Student();
+//
+//			LocalDate birthdate = LocalDate.of(1999, Month.FEBRUARY, 1);
+//			stud.setBirthdate(birthdate);
+//
+//			stud.setCourse("");
+//			stud.setDepartment("");
+//			stud.setEmail("");
+//			stud.setFirstname("prince");
+//			stud.setGender("");
+//			stud.setLastname("nalasa");
+//			stud.setLevel(4);
+//			stud.setMobileNumber("");
+//
+//			List<Address> adds = new ArrayList<Address>();
+//			adds.add(add1);
+//			adds.add(add2);
+//
+//			Map<String, String> officer = new HashMap<String, String>();
+//			officer.put("department", "president");
+//			officer.put("section", "vise president");
+//
+//			stud.setAddress(adds);
+//			stud.setPosition(officer);
+
+			Optional<Student> stud = studentRepo.findById(17L);
+			for (Map.Entry<String, String> m : stud.get().getPosition().entrySet()) {
+				System.out.println(m.getKey() + " " + m.getValue());
 			}
 		};
 	}

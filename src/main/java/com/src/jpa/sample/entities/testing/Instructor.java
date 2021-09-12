@@ -4,18 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Formula;
-
 /*
  * when we save instructor object, associated student will also be save
  * (through the use of cascade->all strategy)
@@ -23,40 +11,40 @@ import org.hibernate.annotations.Formula;
  * 
  * */
 
-@Entity
-@Table(name = "INSTRUCTOR_TBL")
+//@Entity
+//@Table(name = "INSTRUCTOR_TBL")
 public class Instructor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "INSTRUCTOR_ID")
+//	@Id
+//	@GeneratedValue
+//	@Column(name = "INSTRUCTOR_ID")
 	private Long id;
 
-	@Column(name = "FIRSTNAME")
+//	@Column(name = "FIRSTNAME")
 	private String firstname;
 
-	@Column(name = "LASTNAME")
+//	@Column(name = "LASTNAME")
 	private String lastname;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "BIRTHDATE")
+//	@Temporal(TemporalType.DATE)
+//	@Column(name = "BIRTHDATE")
 	private Date birthdate;
 
-	@Formula("lower(datediff(curdate(), BIRTHDATE)/365)")
+//	@Formula("lower(datediff(curdate(), BIRTHDATE)/365)")
 	private int age;
 
-	@Column(name = "GENDER")
+//	@Column(name = "GENDER")
 	private String gender;
 
-	@Column(name = "COMPANY")
+//	@Column(name = "COMPANY")
 	private String company;
 
-	@Column(name = "POSITION")
+//	@Column(name = "POSITION")
 	private String position;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor")
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor")
 	private List<Student> students;
 
 	public Long getId() {

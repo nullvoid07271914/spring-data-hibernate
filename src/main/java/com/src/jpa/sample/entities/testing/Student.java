@@ -2,15 +2,6 @@ package com.src.jpa.sample.entities.testing;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.src.jpa.sample.entities.Instructor;
 
 /*
@@ -19,24 +10,24 @@ import com.src.jpa.sample.entities.Instructor;
  * 
  * */
 
-@Entity
-@Table(name = "STUDENT_TBL")
+//@Entity
+//@Table(name = "STUDENT_TBL")
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "STUDENT_ID")
+//	@Id
+//	@GeneratedValue
+//	@Column(name = "STUDENT_ID")
 	private Long id;
 
-	@Column(name = "COURSE")
+//	@Column(name = "COURSE")
 	private String course;
 
-	@Column(name = "LEVEL")
+//	@Column(name = "LEVEL")
 	private int level;
 
-	@Column(name = "DEPARTMENT")
+//	@Column(name = "DEPARTMENT")
 	private String department;
 
 	/*
@@ -44,8 +35,8 @@ public class Student implements Serializable {
 	 * can lead to N+1 query issues (duplicate saving) or fetching more data than
 	 * necessary.
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "INSTRUCTOR_ID")
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "INSTRUCTOR_ID")
 	private Instructor instructor;
 
 	public Long getId() {

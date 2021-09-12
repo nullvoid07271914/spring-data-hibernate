@@ -3,7 +3,6 @@ package com.src.jpa.sample.entities;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.Formula;
@@ -33,8 +32,9 @@ public class Person extends Domain {
 	@Column(name = "MOBILE_NUMBER")
 	private String mobileNumber;
 
-	@Embedded
-	private Address address;
+//	@ElementCollection
+//	@CollectionTable(name = "ADDRESS_TBL", joinColumns = @JoinColumn(name = ""))
+//	private Address address;
 
 	public String getFirstname() {
 		return firstname;
@@ -92,12 +92,12 @@ public class Person extends Domain {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 
 }

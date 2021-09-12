@@ -2,14 +2,18 @@ package com.src.jpa.sample.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,6 +36,16 @@ public class Student extends Person implements Serializable {
 
 	@Column(name = "LEVEL")
 	private int level;
+
+	@ElementCollection
+	@CollectionTable(name = "ADDRESS_TBL", joinColumns = @JoinColumn(name = "ID", referencedColumnName = "STUDENT_ID"))
+	private List<Address> address;
+
+	@ElementCollection
+	@CollectionTable(name = "STUDENT_OFFICER_TBL", joinColumns = @JoinColumn(name = "ID", referencedColumnName = "STUDENT_ID"))
+	@MapKeyColumn(name = "TYPE") // key
+	@Column(name = "POSITION") // value
+	private Map<String, String> position;
 
 	@OneToMany(targetEntity = Subject.class)
 	@JoinTable(name = "STUDENT_SUBJECT_TBL", joinColumns = { @JoinColumn(name = "STUDENT_ID") }, inverseJoinColumns = {
@@ -68,6 +82,22 @@ public class Student extends Person implements Serializable {
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
+
+	public Map<String, String> getPosition() {
+		return position;
+	}
+
+	public void setPosition(Map<String, String> position) {
+		this.position = position;
 	}
 
 	public List<Subject> getSubjects() {
