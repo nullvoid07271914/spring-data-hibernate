@@ -1,7 +1,7 @@
 package com.src.jpa.sample;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -9,14 +9,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.src.jpa.sample.entities.Student;
+import com.src.jpa.sample.entities.Instructor;
+import com.src.jpa.sample.repositories.InstructorRepository;
 import com.src.jpa.sample.repositories.StudentRepository;
+import com.src.jpa.sample.repositories.custom.impl.query.InstructorQuery;
 
 @SpringBootApplication
 public class SampleApplication {
 
 	@Autowired
 	private StudentRepository studentRepo;
+
+	@Autowired
+	private InstructorRepository insRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SampleApplication.class, args);
@@ -121,10 +126,17 @@ public class SampleApplication {
 //			stud.setAddress(adds);
 //			stud.setPosition(officer);
 
-			Optional<Student> stud = studentRepo.findById(17L);
-			for (Map.Entry<String, String> m : stud.get().getPosition().entrySet()) {
-				System.out.println(m.getKey() + " " + m.getValue());
-			}
+//			Optional<Student> stud = studentRepo.findById(17L);
+//			for (Map.Entry<String, String> m : stud.get().getPosition().entrySet()) {
+//				System.out.println(m.getKey() + " " + m.getValue());
+//			}
+
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put(InstructorQuery.DEPARTMENT.getAttribute(), "ite");
+			Instructor ins = insRepo.findByDepartment(params);
+			System.out.println(ins.getFirstname());
+			System.out.println(ins.getDepartment());
+//			System.out.println(ins.get);
 		};
 	}
 }

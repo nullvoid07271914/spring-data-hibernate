@@ -1,10 +1,16 @@
 package com.src.jpa.sample.repositories.custom.impl;
 
+import static com.src.jpa.sample.repositories.custom.impl.query.InstructorQuery.DEPARTMENT;
+import static com.src.jpa.sample.repositories.custom.impl.query.InstructorQuery.INTRUCTOR_BY_DEPARTMENT;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
@@ -18,8 +24,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.src.jpa.sample.entities.Instructor;
-import com.src.jpa.sample.repositories.attributes.InstructorAttributes;
 import com.src.jpa.sample.repositories.custom.InstructorRepositoryCustom;
+import com.src.jpa.sample.repositories.custom.impl.query.SqlQuery;
 
 @Repository
 public class InstructorRepositoryCustomImpl implements InstructorRepositoryCustom {
@@ -29,6 +35,24 @@ public class InstructorRepositoryCustomImpl implements InstructorRepositoryCusto
 	@Autowired
 	private EntityManager entityManager;
 
+	@Autowired
+	private SqlQuery sqlQuery;
+
+	@Transactional
+	@Override
+	public Instructor findByDepartment(Map<String, Object> params) throws IOException {
+		String sql = sqlQuery.getSql(INTRUCTOR_BY_DEPARTMENT);
+		TypedQuery<Instructor> query = entityManager.createQuery(sql, Instructor.class);
+		
+		for (Map.Entry<String, Object> param : params.entrySet()) {
+			String attribute = param.getKey();
+			Object value = param.getValue();
+			query.setParameter(attribute, value);
+		}
+		
+		return query.getSingleResult();
+	}
+
 	@Transactional
 	@Override
 	public List<Instructor> findByDepartments(Set<String> departments) {
@@ -37,7 +61,7 @@ public class InstructorRepositoryCustomImpl implements InstructorRepositoryCusto
 		CriteriaQuery<Instructor> query = criteria.createQuery(clzz);
 		Root<Instructor> instructor = query.from(clzz);
 
-		String byDepartment = InstructorAttributes.DEPARTMENT.getKey();
+		String byDepartment = DEPARTMENT.getAttribute();
 		logger.info("Find instructor by departments {}", byDepartment);
 		Path<String> emailPath = instructor.get(byDepartment);
 

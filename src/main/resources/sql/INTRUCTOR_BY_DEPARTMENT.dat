@@ -1,0 +1,1 @@
+SELECT e FROM Instructor e WHERE e.department like :department
